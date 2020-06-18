@@ -39,14 +39,13 @@ def main():
     else:
         logger.info(crayons.yellow("Data file not present, PANICKING"))
         workspaces = [ws.num for ws in i3.get_workspaces() if ws.visible]
-        if len(workspaces) > 1:
-            logger.info(
-                crayons.red(
-                    f"Workspaces {','.join([f'`{ws}`' for ws in workspaces])} are visible"
-                )
+        logger.info(
+            crayons.red(
+                f"Workspaces {','.join([f'`{ws}`' for ws in workspaces])} are visible"
+                if len(workspaces) > 1
+                else f"Workspace `{workspaces[0]}` is visible"
             )
-        else:
-            logger.info(crayons.red(f"Workspace `{workspaces[0]}` is visible"))
+        )
         for i in range(10):
             if (i + 1) not in workspaces:
                 free_workspace = i + 1
