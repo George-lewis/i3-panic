@@ -29,7 +29,7 @@ def main():
                 if pair
             ]
         os.remove(DATA_FILE)
-        for window in windows:
+        for window in reversed(windows):
             logger.info(
                 crayons.green(
                     f"Moving window with id {window[0]} to workspace `{window[1]}`"
