@@ -2,9 +2,11 @@
 
 Have you ever had a need to hide what's on your screen with haste? Well, i3-panic is here to help. When invoked the script will throw all the windows on all your visible workspaces somewhere else, then when invoked again will bring them all back.
 
+I recommend binding the script to a dedicated panic button or panic key-combo.
+
 ## Why can't I just switch to an empty workspace?
 
-**Answer**: Of course you could, and that might equally as fast
+**Answer**: Of course you could, and that be might equally as fast
 
 ## How's it work?
 
