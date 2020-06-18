@@ -4,7 +4,7 @@ import sys
 from tempfile import gettempdir as tempdir
 
 import crayons
-from i3ipc import Connection
+from i3ipc import Con, Connection
 
 DATA_FILE = f"{tempdir()}/i3-panic"
 
@@ -19,6 +19,12 @@ logger.info(crayons.white("WE'RE PANICKING"))
 
 def main():
     i3 = Connection()
+
+    def command(wind, cmd):
+        if isinstance(wind, Con):
+            wind.command(cmd)
+        else:
+            i3.command(f"[con_id={wind}] {cmd}")
 
     if os.path.exists(DATA_FILE):
         logger.info(crayons.yellow("Found data file, restoring"))
@@ -35,7 +41,7 @@ def main():
                     f"Moving window with id {window[0]} to workspace `{window[1]}`"
                 )
             )
-            i3.command(f"[con_id={window[0]}] move to workspace {window[1]}")
+            command(window[0], f"move to workspace {window[1]}")
     else:
         logger.info(crayons.yellow("Data file not present, PANICKING"))
         workspaces = [ws.num for ws in i3.get_workspaces() if ws.visible]
@@ -60,8 +66,9 @@ def main():
                         )
                     )
                     windows.append((str(window.id), ws.name))
-                    window.command(
-                        f"floating enable, move container to workspace {free_workspace}"
+                    command(
+                        window,
+                        f"floating enable, move container to workspace {free_workspace}",
                     )
         with open(DATA_FILE, "w") as file:
             for window in windows:
